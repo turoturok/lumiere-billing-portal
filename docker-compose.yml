@@ -1,0 +1,7 @@
+services:
+  billing:
+    build: .
+    container_name: lumiere-billing
+    restart: always
+    ports:
+      - "5050:8000"

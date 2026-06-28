@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Recibo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            color: #1f2937;
+        }
+
+        .header {
+            border-bottom: 3px solid #111827;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-top: 8px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #f3f4f6;
+        }
+
+        .total {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 25px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Recibo de Tarificación</h1>
+    <div class="subtitle">Generado desde reporte SCU200</div>
+</div>
+
+<div class="section">
+    <p><span class="label">Folio:</span> {{ folio }}</p>
+    <p><span class="label">Fecha de emisión:</span> {{ fecha }}</p>
+    <p><span class="label">Periodo facturado:</span> {{ periodo }}</p>
+</div>
+
+<div class="section">
+    <p><span class="label">Plaza:</span> {{ plaza }}</p>
+    <p><span class="label">Cliente / Local:</span> {{ cliente }}</p>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Concepto</th>
+            <th>Importe</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Tarificación de consumo energético</td>
+            <td>{{ total }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="total">
+    Total: {{ total }}
+</div>
+
+<div class="section">
+    <p><span class="label">Observaciones:</span></p>
+    <p>{{ observaciones }}</p>
+</div>
+
+<div class="footer">
+    Este documento fue generado automáticamente con base en el archivo CSV del sistema SCU200.
+</div>
+
+</body>
+</html>
