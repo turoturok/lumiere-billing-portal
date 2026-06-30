@@ -1,13 +1,16 @@
 from fastapi import FastAPI, Request, Form, UploadFile, File
 from fastapi.responses import HTMLResponse, Response
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+
 import pandas as pd
 import tempfile
-import base64
 from weasyprint import HTML
 
 app = FastAPI(title="Lumiere Billing Portal")
+
 templates = Jinja2Templates(directory="/app/app/templates")
+app.mount("/static", StaticFiles(directory="/app/app/static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -66,48 +69,16 @@ def calcular_total(df, columna_costo):
     return float(pd.to_numeric(serie, errors="coerce").fillna(0).sum())
 
 
-async def convertir_logo_a_base64(archivo_logo):
-    if archivo_logo is None or archivo_logo.filename == "":
-        return ""
-
-    nombre = archivo_logo.filename.lower()
-
-    extensiones = {
-        ".png": "image/png",
-        ".jpg": "image/jpeg",
-        ".jpeg": "image/jpeg",
-        ".webp": "image/webp",
-        ".gif": "image/gif",
-        ".svg": "image/svg+xml"
-    }
-
-    mime = None
-    for ext, tipo in extensiones.items():
-        if nombre.endswith(ext):
-            mime = tipo
-            break
-
-    if mime is None:
-        return ""
-
-    contenido = await archivo_logo.read()
-    encoded = base64.b64encode(contenido).decode("utf-8")
-
-    return f"data:{mime};base64,{encoded}"
-
-
 @app.post("/generar-pdf")
 async def generar_pdf(
     request: Request,
-    plaza: str = Form(""),
+    plaza: str = Form("Plaza Regia"),
     cliente: str = Form(""),
     periodo: str = Form(""),
     fecha: str = Form(""),
     folio: str = Form("REC-000001"),
     observaciones: str = Form(""),
-    csv_file: UploadFile = File(...),
-    logo_plaza: UploadFile = File(None),
-    logo_cliente: UploadFile = File(None)
+    csv_file: UploadFile = File(...)
 ):
 
     with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as tmp:
@@ -133,27 +104,23 @@ async def generar_pdf(
 
     total = calcular_total(df, columna_costo)
 
-    logo_plaza_base64 = await convertir_logo_a_base64(logo_plaza)
-    logo_cliente_base64 = await convertir_logo_a_base64(logo_cliente)
-
     html = templates.TemplateResponse(
         request=request,
         name="recibo.html",
         context={
-            "plaza": plaza,
+            "plaza": "Plaza Regia",
             "cliente": cliente_final,
             "periodo": periodo,
             "fecha": fecha,
             "folio": folio,
             "observaciones": observaciones,
             "total": "${:,.2f}".format(total),
-            "logo_plaza": logo_plaza_base64,
-            "logo_cliente": logo_cliente_base64,
-            "columna_costo": str(columna_costo)
+            "columna_costo": str(columna_costo),
+            "logo_plaza": "/app/app/static/img/plaza-regia.png"
         }
     )
 
-    pdf = HTML(string=html.body.decode()).write_pdf()
+    pdf = HTML(string=html.body.decode(), base_url="/").write_pdf()
 
     return Response(
         content=pdf,

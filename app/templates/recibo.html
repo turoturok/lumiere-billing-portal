@@ -1,140 +1,420 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Recibo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 35px;
-            color: #1f2937;
-        }
+<meta charset="UTF-8">
+<title>Recibo de Luz</title>
 
-        .logos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+<style>
+@page {
+    size: Letter;
+    margin: 18px;
+}
 
-        .logo {
-            max-height: 95px;
-            max-width: 190px;
-            object-fit: contain;
-        }
+body {
+    font-family: Arial, sans-serif;
+    color: #20242a;
+    font-size: 10.5px;
+    margin: 0;
+}
 
-        .header {
-            border-bottom: 3px solid #111827;
-            padding-bottom: 18px;
-            margin-bottom: 28px;
-        }
+.orange { color: #ff3d00; }
 
-        h1 {
-            margin: 0;
-            font-size: 30px;
-        }
+.top {
+    display: grid;
+    grid-template-columns: 38% 62%;
+    gap: 18px;
+    align-items: start;
+    margin-bottom: 14px;
+}
 
-        .subtitle {
-            color: #6b7280;
-            margin-top: 8px;
-        }
+.logo-box {
 
-        .section {
-            margin-bottom: 22px;
-        }
+    border:2px solid #ff5a1f;
 
-        .label {
-            font-weight: bold;
-        }
+    border-radius:12px;
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-        }
+    height:95px;
 
-        th, td {
-            border: 1px solid #d1d5db;
-            padding: 12px;
-            text-align: left;
-        }
+    display:flex;
 
-        th {
-            background: #f3f4f6;
-        }
+    justify-content:center;
 
-        .total {
-            font-size: 26px;
-            font-weight: bold;
-            text-align: right;
-            margin-top: 25px;
-        }
+    align-items:center;
 
-        .footer {
-            margin-top: 55px;
-            font-size: 12px;
-            color: #6b7280;
-        }
-    </style>
+    overflow:hidden;
+
+    padding:0;
+
+}
+
+.logo-box img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    padding: 6px;
+}
+
+.title h1 {
+    margin: 0;
+    font-size: 27px;
+    line-height: 1;
+}
+
+.title p {
+    margin: 4px 0 12px 0;
+    color: #777;
+    font-size: 12px;
+}
+
+.meta {
+    font-size: 10.5px;
+    line-height: 1.6;
+}
+
+.meta span {
+    display: inline-block;
+    width: 125px;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 13px;
+}
+
+.card h3,
+.section h3 {
+    margin: 0 0 10px 0;
+    color: #ff3d00;
+    font-size: 12px;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 6px;
+}
+
+.info-row strong {
+    width: 85px;
+}
+
+.pay-card {
+    background: #fff3ef;
+    border-radius: 8px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 65% 35%;
+    align-items: center;
+}
+
+.pay-card h3 {
+    color: #ff3d00;
+    margin: 0 0 8px 0;
+    font-size: 12px;
+}
+
+.amount {
+    font-size: 31px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.due {
+    border-left: 1px solid #ddd;
+    padding-left: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.section {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 13px;
+    margin-bottom: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+}
+
+th {
+    background: #efefef;
+    text-align: left;
+    padding: 8px;
+}
+
+td {
+    border-bottom: 1px solid #e5e5e5;
+    padding: 8px;
+}
+
+.charges {
+
+    display: grid;
+
+    grid-template-columns: 58% 42%;
+
+    column-gap: 10px;
+
+    align-items: start;
+
+    margin-top: 12px;
+
+}
+
+.charge-row {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:6px;
+
+    padding:2px 0;
+
+}
+
+.charge-total {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-top:1px solid #d9d9d9;
+
+    margin-top:8px;
+
+    padding-top:8px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+.bottom-grid{
+
+    display:grid;
+
+    grid-template-columns:48% 52%;
+
+    gap:18px;
+
+    margin-top:24px;
+
+    margin-bottom:14px;
+
+}
+
+.bottom-grid p {
+    margin: 5px 0;
+}
+
+.footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-end;
+
+    font-size:9px;
+
+    color:#666;
+
+    margin-top:18px;
+
+}
+
+.thanks {
+
+    text-align:center;
+
+    color:#ff5a1f;
+
+    font-weight:bold;
+
+    margin-top:18px;
+
+    padding-top:10px;
+
+    border-top:2px solid #ff5a1f;
+
+    font-size:11px;
+
+    letter-spacing:.5px;
+
+}
+
+.obs{
+
+    padding-right:20px;
+
+}
+
+.desglose{
+
+    margin-left:-18px;
+
+}
+</style>
 </head>
+
 <body>
 
-<div class="logos">
-    <div>
-        {% if logo_plaza %}
-            <img class="logo" src="{{ logo_plaza }}">
-        {% endif %}
+<div class="top">
+    <div class="logo-box">
+        <img src="{{ logo_plaza }}">
     </div>
 
-    <div>
-        {% if logo_cliente %}
-            <img class="logo" src="{{ logo_cliente }}">
-        {% endif %}
+    <div class="title">
+        <h1>RECIBO DE LUZ</h1>
+        <p>SERVICIO DE ENERGÍA ELÉCTRICA</p>
+
+        <div class="meta">
+            <div><span>FOLIO:</span> <b class="orange">{{ folio }}</b></div>
+            <div><span>FECHA DE EMISIÓN:</span> {{ fecha }}</div>
+            <div><span>PERIODO:</span> {{ periodo }}</div>
+            <div><span>VENCIMIENTO:</span> Pendiente</div>
+        </div>
     </div>
 </div>
 
-<div class="header">
-    <h1>Recibo de Tarificación</h1>
-    <div class="subtitle">Generado desde reporte SCU200</div>
+<div class="grid">
+    <div class="card">
+        <h3>DATOS DEL LOCATARIO</h3>
+        <div class="info-row"><strong>Nombre:</strong> {{ cliente }}</div>
+        <div class="info-row"><strong>Plaza:</strong> {{ plaza }}</div>
+        <div class="info-row"><strong>Servicio:</strong> Energía eléctrica</div>
+        <div class="info-row"><strong>Medidor:</strong> SCU200</div>
+    </div>
+
+    <div class="pay-card">
+        <div>
+            <h3>TOTAL A PAGAR</h3>
+            <p class="amount">{{ total }}</p>
+            <small>Importe calculado con base en reporte SCU200.</small>
+        </div>
+
+        <div class="due">
+            <div class="orange">PAGAR ANTES DE</div>
+            <div>Pendiente</div>
+        </div>
+    </div>
 </div>
 
 <div class="section">
-    <p><span class="label">Folio:</span> {{ folio }}</p>
-    <p><span class="label">Fecha de emisión:</span> {{ fecha }}</p>
-    <p><span class="label">Periodo facturado:</span> {{ periodo }}</p>
+    <h3>RESUMEN DE CONSUMO</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>CONCEPTO</th>
+                <th>PERIODO</th>
+                <th>FUENTE</th>
+                <th>IMPORTE</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Energía Eléctrica</td>
+                <td>{{ periodo }}</td>
+                <td>{{ columna_costo }}</td>
+                <td>{{ total }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="charges">
+
+    <div class="obs">
+
+        <h3>OBSERVACIONES</h3>
+
+        <p>{{ observaciones }}</p>
+
+        <p>
+            Recibo generado automáticamente con base en el archivo
+            de tarificación SCU200.
+        </p>
+
+    </div>
+
+    <div class="desglose">
+
+        <h3>DESGLOSE DE CARGOS</h3>
+
+        <div class="charge-row">
+            <span>Energía eléctrica</span>
+            <span>{{ total }}</span>
+        </div>
+
+        <div class="charge-row">
+            <span>Cargo por servicio</span>
+            <span>$0.00</span>
+        </div>
+
+        <div class="charge-row">
+            <span>IVA</span>
+            <span>$0.00</span>
+        </div>
+
+        <div class="charge-total">
+            <span>TOTAL</span>
+            <span>{{ total }}</span>
+        </div>
+
+    </div>
+
 </div>
 
-<div class="section">
-    <p><span class="label">Plaza:</span> {{ plaza }}</p>
-    <p><span class="label">Cliente / Local:</span> {{ cliente }}</p>
-</div>
+<div class="bottom-grid">
+    <div class="card">
+        <h3>INFORMACIÓN IMPORTANTE</h3>
+        <p>• El pago oportuno permite mantener el control del servicio.</p>
+        <p>• En caso de dudas, contactar a administración.</p>
+        <p>• Verificar que el periodo corresponda al reporte cargado.</p>
+    </div>
 
-<table>
-    <thead>
-        <tr>
-            <th>Concepto</th>
-            <th>Importe</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>Tarificación de consumo energético</td>
-            <td>{{ total }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<div class="total">
-    Total: {{ total }}
-</div>
-
-<div class="section">
-    <p><span class="label">Observaciones:</span></p>
-    <p>{{ observaciones }}</p>
+    <div class="card">
+        <h3>FORMAS DE PAGO</h3>
+        <p><strong>En Administración:</strong> Plaza Regia</p>
+        <p><strong>Transferencia:</strong> Información pendiente.</p>
+        <p><strong>Pago en línea:</strong> Próximamente.</p>
+    </div>
 </div>
 
 <div class="footer">
-    Este documento fue generado automáticamente con base en el archivo CSV del sistema SCU200.
+    <div>
+        <strong class="orange">PLAZA REGIA</strong><br>
+        Administración Plaza Regia<br>
+        Recibo generado por Lumiere Energy Portal
+    </div>
+
+    <div>
+        Fecha de generación: {{ fecha }}
+    </div>
+</div>
+
+<div class="thanks">
+    ¡GRACIAS POR SER PARTE DE PLAZA REGIA!
 </div>
 
 </body>
